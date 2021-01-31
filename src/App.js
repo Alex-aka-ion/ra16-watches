@@ -1,25 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
+import React, {useState} from "react";
+import Clock from "./components/Clock";
+import ClockAddForm from "./components/ClockAddForm";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [watches, setWatch] = useState([]);
+
+    const addClock = (newWatch) => {
+        setWatch([...watches, newWatch]);
+    }
+
+    const onDelete = (itemToDelete) => {
+        setWatch(watches.filter((i) => i !== itemToDelete));
+    }
+
+    return (
+        <div className="App">
+            <ClockAddForm addClock={addClock}/>
+            {watches.map((item, index) => <Clock key={index} timeZone={item} onDelete={onDelete}/>)}
+        </div>
+    );
 }
 
 export default App;
